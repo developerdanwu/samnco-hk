@@ -1,0 +1,7 @@
+---
+import ShopPage from "../../components/ShopPage.astro";
+import { shopPaths } from "../../lib/shop-paths.ts";
+export async function getStaticPaths() { return await shopPaths(); }
+const props = Astro.props;
+---
+<ShopPage {...props} />

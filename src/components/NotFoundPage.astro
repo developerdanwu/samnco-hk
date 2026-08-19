@@ -1,0 +1,35 @@
+---
+import Base from "../layouts/Base.astro";
+import { m } from "../paraglide/messages.js";
+import { localizeHref } from "../paraglide/runtime.js";
+---
+<Base title={m.meta_title_404()}>
+  <main class="mx-auto flex max-w-6xl flex-col items-start gap-5 px-5 py-20 md:px-14 md:py-28">
+    <h1 class="font-serif text-[34px] leading-[1.1] font-light md:text-5xl" data-404-title>{m.e404_title()}</h1>
+    <p class="text-paper-700 max-w-prose text-base leading-[1.72]" data-404-body>{m.e404_body()}</p>
+    <a href={localizeHref("/shop")}
+       class="bg-paper-900 text-paper-50 mt-2 flex h-13 items-center justify-center px-6 text-xs tracking-[0.14em] uppercase"
+       data-404-link>
+      {m.e404_back()}
+    </a>
+  </main>
+</Base>
+
+<script>
+  // A static host serves ONE 404.html for every unmatched route, so a bad /zh-hk/ URL would
+  // otherwise show English. The host does not rewrite the URL, so window.location still says
+  // /zh-hk/ and Paraglide resolves the locale from it — we just re-read the messages.
+  // KNOWN LIMIT: the header and footer stay in the build locale. Fully localising those needs
+  // host-level routing to a second 404 document, which Vercel's static 404 does not do.
+  import { m } from "../paraglide/messages.js";
+  import { getLocale } from "../paraglide/runtime.js";
+
+  if (getLocale() !== "en") {
+    document.documentElement.lang = getLocale();
+    document.querySelector("[data-404-title]")!.textContent = m.e404_title();
+    document.querySelector("[data-404-body]")!.textContent = m.e404_body();
+    const link = document.querySelector<HTMLAnchorElement>("[data-404-link]")!;
+    link.textContent = m.e404_back();
+    link.href = "/zh-hk/shop";
+  }
+</script>
