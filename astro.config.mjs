@@ -1,5 +1,6 @@
 import { defineConfig, envField } from "astro/config";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
@@ -10,7 +11,15 @@ export default defineConfig({
   site: "https://www.samnco-hk.shop",
   output: "static",
   adapter: vercel(),
-  integrations: [react()],
+  integrations: [
+    react(),
+    // Emits both locale trees with xhtml:link alternates, so the sitemap carries the same
+    // hreflang relationships as the pages themselves.
+    sitemap({
+      i18n: { defaultLocale: "en", locales: { en: "en", "zh-hk": "zh-HK" } },
+      filter: (page) => !page.includes("/404"),
+    }),
+  ],
   // Typed, validated env. A missing credential fails the build immediately with a clear
   // message rather than surfacing as an opaque 404 from Contentful at page-render time.
   env: {

@@ -3,7 +3,9 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { m } from "../paraglide/messages.js";
-import { getLocale } from "../paraglide/runtime.js";
+import { getLocale, localizeHref, locales } from "../paraglide/runtime.js";
+import { getImage } from "astro:assets";
+import ogSource from "../assets/banner-2500.jpg";
 import { getAllProducts, getCategoryCounts } from "../lib/contentful.ts";
 
 interface Props { title?: string; description?: string }
@@ -11,15 +13,56 @@ const { title, description } = Astro.props;
 
 // Cached per process, so ~700 prerendered pages fetch the catalogue once.
 const [products, counts] = await Promise.all([getAllProducts(), getCategoryCounts()]);
+
+const pageTitle = title ?? m.meta_title_home();
+const pageDesc = description ?? m.meta_desc();
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// The path with any locale prefix stripped, so alternates are built from one source.
+const bare = Astro.url.pathname.replace(/^\/zh-hk/, "") || "/";
+const HREFLANG: Record<string, string> = { en: "en", "zh-hk": "zh-HK" };
+
+// hreflang alternates are built from Paraglide's own `locales` + `localizeHref`, so adding a
+// locale never leaves them behind. They MUST point at canonical URLs: localizeHref drops the
+// trailing slash on the prefixed locale while Astro's canonical keeps it, so without this
+// every Chinese page was advertised at a non-canonical variant of itself.
+const withSlash = (p: string) => (p.endsWith("/") ? p : `${p}/`);
+const localeUrl = (loc: string) =>
+  new URL(withSlash(localizeHref(bare, { locale: loc })), Astro.site).href;
+const alternates = locales.map((loc) => ({ hreflang: HREFLANG[loc] ?? loc, href: localeUrl(loc) }));
+
+// og:url now resolves. The Flask site hardcoded the dead .com on every page, so every share
+// preview pointed nowhere (issue 13).
+
+const og = await getImage({ src: ogSource, width: 1200, height: 630, format: "jpg" });
+const ogUrl = new URL(og.src, Astro.site).href;
 ---
 <!doctype html>
 <html lang={getLocale()}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title ?? m.meta_title_home()}</title>
-    <meta name="description" content={description ?? m.meta_desc()} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <link rel="canonical" href={canonical} />
+
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={localeUrl("en")} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sam and Company" />
+    <meta property="og:locale" content={getLocale() === "en" ? "en_HK" : "zh_HK"} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={ogUrl} />
 
     <!-- <link>, not an @import in CSS: an @import placed after any rule is silently dropped
          by browsers, and it also serialises the font request behind the stylesheet. -->

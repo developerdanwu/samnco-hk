@@ -1,0 +1,8 @@
+# Sam and Company / 三和文藝公司
+User-agent: *
+Allow: /
+
+# The search endpoint is on-demand and has nothing to index.
+Disallow: /api/
+
+Sitemap: https://www.samnco-hk.shop/sitemap-index.xml
