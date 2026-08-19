@@ -44,6 +44,12 @@ const ogUrl = new URL(og.src, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#CC0000" />
+
     <link rel="canonical" href={canonical} />
 
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
