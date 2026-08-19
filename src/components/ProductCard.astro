@@ -1,0 +1,37 @@
+---
+import { m } from "../paraglide/messages.js";
+import { localizeHref } from "../paraglide/runtime.js";
+import { imageUrl, gridSrcSet, GRID_SIZES } from "../lib/images.ts";
+import type { Product } from "../lib/contentful.ts";
+
+interface Props { product: Product; eager?: boolean }
+const { product, eager = false } = Astro.props;
+
+const CATEGORY_LABEL: Record<string, () => string> = {
+  "office-stationery": m.cat_office, "seasonal-products": m.cat_seasonal,
+  "art-supplies": m.cat_art, lifestyle: m.cat_lifestyle, children: m.cat_children,
+};
+---
+<!--
+  No price and no second category. 94% of products have no price, so leaning on it would make
+  the grid look broken; `category2` is null on 86% and is retired (issues 05, 14).
+-->
+<a href={localizeHref(`/detail/${product.id}`)} class="group flex flex-col gap-2.5">
+  <div class="bg-paper-200 flex aspect-square items-center justify-center overflow-hidden">
+    <img
+      src={imageUrl(product.image, 400)}
+      srcset={gridSrcSet(product.image)}
+      sizes={GRID_SIZES}
+      alt={product.title}
+      width="400"
+      height="400"
+      loading={eager ? "eager" : "lazy"}
+      decoding={eager ? "sync" : "async"}
+      class="size-[82%] object-contain mix-blend-multiply"
+    />
+  </div>
+  <div class="flex flex-col gap-1">
+    <h3 class="font-serif text-[15px] leading-[1.3] group-hover:underline md:text-base">{product.title}</h3>
+    <p class="eyebrow">{CATEGORY_LABEL[product.category]?.()}</p>
+  </div>
+</a>

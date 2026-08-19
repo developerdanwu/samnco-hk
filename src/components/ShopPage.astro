@@ -1,0 +1,80 @@
+---
+import Base from "../layouts/Base.astro";
+import ProductCard from "./ProductCard.astro";
+import { m } from "../paraglide/messages.js";
+import { localizeHref } from "../paraglide/runtime.js";
+import { CATEGORIES, type Category, type Product } from "../lib/contentful.ts";
+
+interface Props {
+  products: Product[]; total: number; counts: Record<string, number>;
+  category: Category | null; page: number; totalPages: number;
+}
+const { products, total, counts, category, page, totalPages } = Astro.props;
+
+const CATEGORY_LABEL: Record<string, () => string> = {
+  "office-stationery": m.cat_office, "seasonal-products": m.cat_seasonal,
+  "art-supplies": m.cat_art, lifestyle: m.cat_lifestyle, children: m.cat_children,
+};
+const base = (c: Category | null) => (c ? `/shop/${c}` : "/shop");
+const pageHref = (n: number) => localizeHref(n === 1 ? base(category) : `${base(category)}/page/${n}`);
+const EAGER = 4; // first row on desktop
+---
+<Base title={`${category ? CATEGORY_LABEL[category]() : m.shop_title()} — ${m.meta_title_home()}`}>
+  <main class="mx-auto max-w-6xl px-5 pt-8 md:px-14 md:pt-11">
+    <div class="flex flex-col gap-3">
+      <h1 class="font-serif text-[32px] font-light md:text-[40px]">
+        {category ? CATEGORY_LABEL[category]() : m.shop_title()}
+      </h1>
+      <p class="text-paper-700 max-w-[52ch] text-sm leading-[1.7]">{m.shop_intro({ count: total })}</p>
+    </div>
+
+    <!-- Search input is mounted here in issue 23. -->
+
+    <nav class="border-paper-300 -mx-5 mt-6 overflow-x-auto border-b px-5 pb-4 md:mx-0 md:px-0">
+      <ul class="flex w-max gap-2 text-[11px] tracking-[0.12em] uppercase md:w-auto md:gap-2.5">
+        <li>
+          <a href={localizeHref("/shop")}
+             aria-current={category === null ? "page" : undefined}
+             class:list={["flex h-9.5 items-center px-3.5 whitespace-nowrap",
+               category === null ? "bg-paper-900 text-paper-50" : "border-paper-300 text-paper-700 border"]}>
+            {m.cat_all()} {total}
+          </a>
+        </li>
+        {CATEGORIES.map((c) => (
+          <li>
+            <a href={localizeHref(`/shop/${c}`)}
+               aria-current={category === c ? "page" : undefined}
+               class:list={["flex h-9.5 items-center px-3.5 whitespace-nowrap",
+                 category === c ? "bg-paper-900 text-paper-50" : "border-paper-300 text-paper-700 border"]}>
+              {CATEGORY_LABEL[c]()} {counts[c]}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Two across on mobile, not one: a single column makes 348 products an endless scroll. -->
+    <div class="grid grid-cols-2 gap-x-4 gap-y-6.5 py-7 md:grid-cols-4 md:gap-x-7 md:gap-y-9 md:py-9">
+      {products.map((p, i) => <ProductCard product={p} eager={i < EAGER} />)}
+    </div>
+
+    {totalPages > 1 && (
+      <nav class="flex items-center gap-2 pb-4" aria-label="Pagination">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+          <a href={pageHref(n)}
+             aria-current={n === page ? "page" : undefined}
+             class:list={["flex size-11 items-center justify-center text-sm",
+               n === page ? "border-paper-900 border" : "border-paper-300 text-paper-650 border"]}>
+            {n}
+          </a>
+        ))}
+        {page < totalPages && (
+          <a href={pageHref(page + 1)}
+             class="border-paper-300 ml-1 flex h-11 flex-1 items-center justify-center border px-5 text-[11px] tracking-[0.12em] uppercase md:flex-none">
+            {m.pagination_next()}
+          </a>
+        )}
+      </nav>
+    )}
+  </main>
+</Base>

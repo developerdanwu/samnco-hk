@@ -91,3 +91,30 @@ a round trip. Flagging them here so they are visible rather than silent — say 
   previews point at a dead domain.
 - **`sitemap.xml` and `robots.txt` regenerated**, covering both locales. The versions in `old files/`
   are stale and reference the `.com`.
+
+
+## Correction — pagination cannot use a query string on a static build
+
+The answer above kept `?page=N`. **That is not implementable with `output: "static"`**: a
+prerendered document does not vary by query string, so `/shop?page=2` would serve the same bytes as
+`/shop`. Query-param pagination needs SSR or client-side slicing, and neither was chosen. The
+decision was made without noticing this.
+
+**Corrected to path-based pagination:**
+
+| | |
+| --- | --- |
+| `/shop` | page 1, all products — canonical |
+| `/shop/page/2` … `/shop/page/10` | 36 per page |
+| `/shop/<category>` | page 1 of that category |
+| `/shop/<category>/page/2` | … |
+
+Plus the `/zh-hk/` mirror of each.
+
+**This costs nothing in URL continuity, which is why the original decision existed.** The old
+`?page=N` URLs land on `/shop` page 1, and the content they used to serve was arbitrary anyway: the
+Flask bug meant `?page=1` returned products 37–72 and `?page=10` returned an empty grid. There is no
+correct old content to preserve.
+
+`/shop/<category>` cannot collide with `/shop/page/…` — `page` is not one of the five category
+slugs, and the five are a closed set validated in the content layer.
