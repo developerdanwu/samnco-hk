@@ -1,8 +1,0 @@
-User-Agent: *
-Allow: /https://samnco-hk.com/index.html
-Allow: /https://samnco-hk.com/store.html
-Allow: /https://samnco-hk.com/about.html
-Disallow: /https://samnco-hk.com/404.html
-
-Sitemap: https://samnco-hk.com/sitemap.xml
-
