@@ -10,6 +10,10 @@ import { paraglideVitePlugin } from "@inlang/paraglide-js";
 export default defineConfig({
   site: "https://www.samnco-hk.shop",
   output: "static",
+  // The adapter emits the Build Output API config itself (routing, the prerendered pages, and
+  // the single on-demand /api/search function), so vercel.json deliberately carries NO build,
+  // output or function configuration — only response headers, which the adapter does not set.
+  // Note vercel.json admits no comments of any kind: a "//" key fails schema validation.
   adapter: vercel(),
   integrations: [
     react(),
