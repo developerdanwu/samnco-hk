@@ -1,0 +1,12 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    // TypeScript 7 REMOVED `baseUrl`. shadcn's docs still tell you to set it; don't.
+    // Without it, `paths` resolves relative to this file, which is what we want anyway.
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules", "venv", "old files", ".vercel"]
+}
