@@ -1,16 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "//": [
-    "No build, output or function configuration here on purpose. @astrojs/vercel emits the",
-    "Build Output API config (.vercel/output/config.json) itself — routing, the prerendered",
-    "pages and the one on-demand /api/search function. Declaring any of that here would",
-    "override the adapter and drift out of step with astro.config.mjs.",
-    "",
-    "Framework Preset, Build Command and Output Directory live in the Vercel project settings.",
-    "What remains are response headers, which the adapter does not set."
-  ],
-
   "headers": [
     {
       "source": "/(.*)",
