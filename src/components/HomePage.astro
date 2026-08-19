@@ -4,14 +4,19 @@ import Base from "../layouts/Base.astro";
 import OpenStatus from "./OpenStatus.astro";
 import banner from "../assets/banner-2500.jpg";
 import { m } from "../paraglide/messages.js";
-import { localizeHref } from "../paraglide/runtime.js";
+import { getLocale, localizeHref } from "../paraglide/runtime.js";
 
 // One shared component; the en and zh-hk routes are three-line shells around it, so the
 // duplication is routing-only and never content (issue 03).
+// Chinese uses full-width punctuation. Hardcoding "," and "." would leave an ASCII stop
+// dangling at the end of a Chinese sentence.
+const isEn = getLocale() === "en";
+const sep = isEn ? "," : "，";
+const stop = isEn ? "." : "。";
+
 const notes = [
   [m.home_note_1_title(), m.home_note_1_body()],
   [m.home_note_2_title(), m.home_note_2_body()],
-  [m.home_note_3_title(), m.home_note_3_body()],
 ];
 ---
 <Base>
@@ -56,6 +61,16 @@ const notes = [
             <p class="text-paper-700 text-sm leading-[1.7]">{body}</p>
           </section>
         ))}
+        <!-- The number and WhatsApp are real links, not text in the sentence: on a phone this
+             is the shortest path from "is it in stock" to an answer. -->
+        <section class="flex flex-col gap-2">
+          <h2 class="font-serif text-xl md:text-[21px]">{m.home_note_3_title()}</h2>
+          <p class="text-paper-700 text-sm leading-[1.7]">
+            {m.home_note_3_body()}{" "}
+            <a href="tel:+85225230338" class="whitespace-nowrap">+852 2523 0338</a>{sep}{" "}
+            <a href="https://wa.me/85297219032">WhatsApp</a>{stop}
+          </p>
+        </section>
       </div>
 
       <div class="border-paper-300 grid gap-8 border-t py-10 md:grid-cols-2 md:gap-12 md:py-11">
