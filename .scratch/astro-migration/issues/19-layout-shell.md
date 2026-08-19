@@ -8,7 +8,7 @@ Blocked by: 17
 
 The chrome every page shares, per ticket 05.
 
-**Header**: logo (38px desktop / 30px mobile), 三和文藝公司 leading with the English name beneath,
+**Header**: logo (38px desktop / 30px mobile), 三和文儀公司 leading with the English name beneath,
 nav with a 2px `#CC0000` rule on the active item, locale **dropdown** (never flags), mobile burger
 opening the full-screen menu.
 

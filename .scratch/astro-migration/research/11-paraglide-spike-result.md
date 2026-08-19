@@ -32,7 +32,7 @@ The research warned about this from reading the source. **It reproduces, and it 
 - 60 pages per locale, `build.concurrency: 8`, no artificial delay → **all 122 correct**. Pages
   rendered in ~80 ms total, too fast to interleave. This is a false negative.
 - Same build with a small `await` in page frontmatter to force genuine overlap → **13 of 122 pages
-  got the wrong locale.** English pages rendered `三和文藝公司` with `lang="zh-hk"`, and Chinese pages
+  got the wrong locale.** English pages rendered `三和文儀公司` with `lang="zh-hk"`, and Chinese pages
   rendered `Sam and Company`.
 - Same delays at `concurrency: 1` (the default) → **all 122 correct.**
 

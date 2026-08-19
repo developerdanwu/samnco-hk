@@ -1,4 +1,4 @@
-# Sam and Company / 三和文藝公司
+# Sam and Company / 三和文儀公司
 User-agent: *
 Allow: /
 

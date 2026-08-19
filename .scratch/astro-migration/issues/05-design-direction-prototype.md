@@ -15,7 +15,7 @@ the site: **home** (hero, the shop blurb, discount items, find-us with the map),
 
 Constraints the directions must respect:
 
-- Brand equity is kept: the logo, "since 1980", 三和文藝公司, and the existing palette as a starting
+- Brand equity is kept: the logo, "since 1980", 三和文儀公司, and the existing palette as a starting
   point — coral `#e07d78`, cream `#f7e1d3`, warm charcoal `#473D3C`. The coral is currently used as
   a background; pulling it back to an accent is worth testing in at least one direction.
 - The brief is **editorial and quiet** — a 45-year-old family stationery and art shop in Central,
@@ -113,7 +113,7 @@ question was whether to push emphasis further toward office supplies. It should 
 After the direction was chosen, three further changes were made and approved. They are now applied
 across all seven Ledger artboards (3 desktop, 4 mobile) and are canonical.
 
-1. **三和文藝公司 leads the header**, set at 27px desktop / 19px mobile in Noto Serif HK 600. The
+1. **三和文儀公司 leads the header**, set at 27px desktop / 19px mobile in Noto Serif HK 600. The
    English "Sam & Company · since 1980" is demoted to an 11px letterspaced line beneath. For a
    Central shop whose customers are mostly local, the previous hierarchy was backwards.
    *Caveat: this approximates 北魏楷書 (Bei Wei Kai), Hong Kong's traditional shopfront calligraphy,
@@ -161,7 +161,7 @@ site already has.** The original omitted the **fax number** (which is on the cur
   categories with their counts · Pages · Ask us (WhatsApp, phone, fax, email).
 - **Information band**: a **seven-day hours strip** with today's column highlighted, beside a
   Getting here block — MTR exit D2 — with "Open in Maps" and "WhatsApp us".
-- **Wordmark band**: 三和文藝公司 at 118px in pale cream. This is where the tradition argument pays
+- **Wordmark band**: 三和文儀公司 at 118px in pale cream. This is where the tradition argument pays
   off — at that size the letterforms actually read.
 - **Bottom strip**: the shop's one-line description and `© 2026 Sam & Company`.
 

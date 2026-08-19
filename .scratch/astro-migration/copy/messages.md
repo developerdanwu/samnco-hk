@@ -5,7 +5,9 @@ Conventions: **Traditional Chinese, Hong Kong usage** — not Simplified, not Ta
 `公眾假期` (HK) not `國定假日`; `地下` for ground floor, not `一樓`; `士丹利街` is the street's
 official Chinese name.
 
-**三和文藝公司 is fixed** — it is the shop's real registered name and is not translated or adjusted.
+**三和文儀公司 is fixed** — the shop's real registered name, not translated or adjusted.
+Note **文儀, not 文藝**: 文儀用品 is the standard Hong Kong term for stationery, whereas 文藝
+means literature and arts. An earlier draft carried the wrong character throughout.
 
 Ready-to-use message files: [`en.json`](en.json) · [`zh-hk.json`](zh-hk.json)
 
@@ -80,7 +82,7 @@ Ready-to-use message files: [`en.json`](en.json) · [`zh-hk.json`](zh-hk.json)
 | `footer_directions` | Central MTR exit D2, two minutes up the street. | 港鐵中環站 D2 出口，沿街步行約兩分鐘。 | |
 | `footer_maps` | Open in Maps | 在地圖中開啟 | |
 | `footer_tagline` | Stationery and art supplies on Stanley Street since 1980 | 士丹利街上的文具與美術用品店，自一九八〇年 | |
-| `footer_rights` | © 2026 Sam & Company | © 2026 三和文藝公司 | |
+| `footer_rights` | © 2026 Sam & Company | © 2026 三和文儀公司 | |
 | `label_phone` | Phone | 電話 | |
 | `label_fax` | Fax | 傳真 | |
 | `label_email` | Email | 電郵 | |
@@ -132,7 +134,7 @@ Ready-to-use message files: [`en.json`](en.json) · [`zh-hk.json`](zh-hk.json)
 | --- | --- | --- | --- |
 | `404_title` | We cannot find that page | 找不到此頁 | |
 | `404_body` | The page may have moved. Try the shop, or ask us. | 該頁可能已經移除。可到產品頁看看，或直接問我們。 | |
-| `meta_title_home` | Sam and Company — Stationery and Art Supplies in Central, Hong Kong | 三和文藝公司 — 香港中環文具及美術用品店 | |
+| `meta_title_home` | Sam and Company — Stationery and Art Supplies in Central, Hong Kong | 三和文儀公司 — 香港中環文具及美術用品店 | |
 | `meta_desc` | A family-run stationery and art supply shop on Stanley Street, Central, Hong Kong. Trading since 1980. | 位於香港中環士丹利街的家庭式文具及美術用品店，自一九八〇年營業至今。 | the current meta claims "over 10,000 products" — that is the physical shop, not the site, and is dropped |
 
 ---

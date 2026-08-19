@@ -18,7 +18,7 @@ paginated product grid, category filter, product search, product detail with ima
 agreed at charting. Tickets still resolve decisions first, but the map is not done until the
 redesigned Astro site is live on the domain.
 
-Domain: a family-run stationery and art supply shop in Central, Hong Kong — 三和文藝公司 / Sam and
+Domain: a family-run stationery and art supply shop in Central, Hong Kong — 三和文儀公司 / Sam and
 Company, trading since 1980. Sole stakeholder and approver: Dan Wu.
 
 Skills every session should consult: `/grilling` and `/domain-modeling` by default;
@@ -35,7 +35,7 @@ every ticket inherits them.
   **prerender at build time**; a Contentful webhook triggers rebuilds. *(Load-bearing assumption —
   if the catalogue turns out to be actively edited with a live expectation, revisit.)*
 - **Design**: redesign, not reskin and not rebrand. Brand equity kept — logo, the coral/cream/warm-
-  charcoal palette (`#e07d78` / `#f7e1d3` / `#473D3C`), "since 1980", 三和文藝公司. Direction is set
+  charcoal palette (`#e07d78` / `#f7e1d3` / `#473D3C`), "since 1980", 三和文儀公司. Direction is set
   by a Claude Design prototype that Dan reacts to; the design leads and the component library
   follows.
 - **Stack**: Astro + React islands + Tailwind + shadcn/ui, using **Base UI** primitives rather than
@@ -45,7 +45,7 @@ every ticket inherits them.
   (caching per query string, dedupe, previous results held while typing). The Delivery token stays
   server-side. This single endpoint is the only server that survives the Flask deletion.
 - **i18n**: Paraglide, **chrome strings only** — nav, footer, headings, buttons. Product content
-  stays as-is in Contentful. 三和文藝公司 is the established name and anchors the zh-HK copy; Claude
+  stays as-is in Contentful. 三和文儀公司 is the established name and anchors the zh-HK copy; Claude
   drafts the rest for Dan's review.
 - **Host**: Vercel. `main.py`, `products.py`, `forms.py`, `ui.py`, `vercel.json`, `Procfile`,
   `requirements.txt`, `.python-version` and `venv/` are all removed by the end of this effort.
@@ -105,13 +105,13 @@ every ticket inherits them.
   accent** with links darkened to `#B4564F` for contrast. **The homepage leads with a photograph of
   the shop**, not a product — it argues for the visit, which is the only conversion available. The
   locale switcher is a **dropdown**. No price is shown anywhere; no gallery.
-  Amended after review: **三和文藝公司 now leads the header**, the accent is the **logo red
+  Amended after review: **三和文儀公司 now leads the header**, the accent is the **logo red
   `#CC0000`** (the coral was a 2021 site invention and is retired), the logo is in the design, and
   **mobile is drawn at 390px** across home, grid, detail and menu. An **open/closed status chip**
   was added as an approved scope addition — specified in ticket 16.
   The **footer** was reworked after review — the original dropped the fax number, category links and
   MTR exit that the site already has. Adopted a **sitemap footer** (navigation columns + seven-day
-  hours strip + getting-here + a 118px 三和文藝公司 wordmark band), desktop and mobile. No credit
+  hours strip + getting-here + a 118px 三和文儀公司 wordmark band), desktop and mobile. No credit
   line, and **no language section** — the Chinese site is the same pages, not extra ones, so the
   locale control lives in the nav and `hreflang` does the SEO work. Confirmed with Dan that the shop
   is framed as **a stationery and art supply store** — the copy already leads with stationery, which

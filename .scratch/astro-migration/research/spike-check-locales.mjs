@@ -10,7 +10,7 @@ for (const d of readdirSync(`${base}/detail`)) {
 for (const d of readdirSync(`${base}/zh-hk/detail`)) {
   const f = `${base}/zh-hk/detail/${d}/index.html`;
   const shop = grab(f,"shop"), loc = grab(f,"loc");
-  if (shop === "三和文藝公司" && loc === "zh-hk") zh++; else bad.push(`zh ${d}: shop=${shop} loc=${loc}`);
+  if (shop === "三和文儀公司" && loc === "zh-hk") zh++; else bad.push(`zh ${d}: shop=${shop} loc=${loc}`);
 }
 console.log(`  en pages correct: ${en}/60   zh-hk pages correct: ${zh}/60`);
 console.log(bad.length ? `  ❌ ${bad.length} WRONG:\n    ` + bad.slice(0,8).join("\n    ") : "  ✅ every page has the right locale");

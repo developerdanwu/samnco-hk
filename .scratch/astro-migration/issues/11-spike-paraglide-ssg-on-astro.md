@@ -52,7 +52,7 @@ on-demand `/api/` route coexists with prerendered pages and the middleware exclu
 
 **Raising `build.concurrency` corrupts locales, silently.** Reproduced: with 60 pages per locale and
 a small `await` in frontmatter to force overlap, `concurrency: 8` gave **13 of 122 pages the wrong
-locale** — English pages rendering `三和文藝公司` with `lang="zh-hk"`. At the default `concurrency: 1`,
+locale** — English pages rendering `三和文儀公司` with `lang="zh-hk"`. At the default `concurrency: 1`,
 all 122 were correct. **The build exits 0 either way**, with no warning.
 
 Two things make this worse than it sounds. Without the artificial delay the same test **passed at

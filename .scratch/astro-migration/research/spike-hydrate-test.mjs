@@ -4,7 +4,7 @@ const browser = await chromium.launch();
 let failures = 0;
 
 for (const [path, expect] of [["/", {locale:"en", shop:"Sam and Company"}],
-                              ["/zh-hk/", {locale:"zh-hk", shop:"三和文藝公司"}]]) {
+                              ["/zh-hk/", {locale:"zh-hk", shop:"三和文儀公司"}]]) {
   const page = await browser.newPage();
   const msgs = [];
   page.on("console", m => msgs.push({ type: m.type(), text: m.text() }));

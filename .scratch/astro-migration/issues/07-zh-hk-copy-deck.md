@@ -15,7 +15,7 @@ typographically viable.
   the six category labels, search placeholder and button, pagination, 404 copy, and all `<title>` /
   meta description / Open Graph text. The final list depends on the copy the chosen design
   direction actually calls for.
-- **Draft the zh-HK translations** for Dan's review. 三和文藝公司 is the established name from the
+- **Draft the zh-HK translations** for Dan's review. 三和文儀公司 is the established name from the
   shop's signage and is fixed. Everything else is drafted and reviewed — this is a HITL ticket and
   does not resolve without Dan's sign-off, particularly on the address and the hours, where Hong
   Kong convention matters more than literal translation.

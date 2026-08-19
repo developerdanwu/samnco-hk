@@ -27,7 +27,7 @@ exists to prevent.
   tint of `#CC0000`. Note the Ledger direction already darkens the coral to `#B4564F` for link
   contrast — that darkened value sits closer to the logo red than the original coral does.
 - What are the **colour tokens**, including the semantic layer shadcn components expect
-  (background, foreground, muted, accent, border, ring) mapped onto 三和文藝's palette rather than
+  (background, foreground, muted, accent, border, ring) mapped onto 三和文儀's palette rather than
   shadcn's neutral greys?
 - What is the **type scale**, and which families carry Latin and Chinese?
 - What are the **spacing, radius and shadow** scales? shadcn's uniform small radii are a large part

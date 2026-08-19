@@ -66,7 +66,7 @@ export default function Nav({ links, locale, localeHrefs, whatsapp, address, hou
         />
         <SheetContent side="right" className="w-full max-w-none gap-0 p-0 sm:max-w-sm">
           <div className="flex items-center justify-between border-b px-5 py-4">
-            <SheetTitle className="font-hk text-lg tracking-[0.08em]">三和文藝公司</SheetTitle>
+            <SheetTitle className="font-hk text-lg tracking-[0.08em]">三和文儀公司</SheetTitle>
             <Button variant="outline" size="icon" className="size-11" onClick={() => setOpen(false)} aria-label="Close">
               <X className="size-4" aria-hidden="true" />
             </Button>
