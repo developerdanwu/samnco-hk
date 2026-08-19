@@ -4,6 +4,7 @@ import ProductCard from "./ProductCard.astro";
 import { m } from "../paraglide/messages.js";
 import { localizeHref } from "../paraglide/runtime.js";
 import { CATEGORIES, type Category, type Product } from "../lib/contentful.ts";
+import Search from "./Search.tsx";
 
 interface Props {
   products: Product[]; total: number; counts: Record<string, number>;
@@ -28,7 +29,9 @@ const EAGER = 4; // first row on desktop
       <p class="text-paper-700 max-w-[52ch] text-sm leading-[1.7]">{m.shop_intro({ count: total })}</p>
     </div>
 
-    <!-- Search input is mounted here in issue 23. -->
+    <div class="mt-5 md:max-w-md">
+      <Search client:idle counts={counts} />
+    </div>
 
     <nav class="border-paper-300 -mx-5 mt-6 overflow-x-auto border-b px-5 pb-4 md:mx-0 md:px-0">
       <ul class="flex w-max gap-2 text-[11px] tracking-[0.12em] uppercase md:w-auto md:gap-2.5">
