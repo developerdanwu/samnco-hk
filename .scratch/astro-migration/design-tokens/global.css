@@ -1,0 +1,205 @@
+/* ---------------------------------------------------------------------------
+   Sam & Company / 三和文藝公司 — design tokens
+   Direction: "Ledger" (see .scratch/astro-migration/issues/05)
+
+   Drop this in as src/styles/global.css AFTER running:
+     npx shadcn@latest init -t astro -b base -p nova -y --no-monorepo
+   It keeps shadcn's variable contract intact — every component added with
+   `shadcn add` inherits this automatically — and replaces only the values.
+
+   Every colour is stated in oklch and was derived, not eyeballed. Contrast
+   ratios in the comments are measured against --paper-50.
+--------------------------------------------------------------------------- */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Karla:wght@400;500;600&family=Noto+Serif+HK:wght@300;400;600&display=swap");
+
+/* NO DARK MODE. Deliberate — see issue 06. The design is a warm-paper
+   aesthetic that does not inverse meaningfully, the current site has none, and
+   it would double the token and QA surface of a five-page brochure site.
+   The variant is left declared so shadcn components compile; no .dark block is
+   defined and the class is never applied. */
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* --- neutral ramp -------------------------------------------------------
+     Hue held at ~50 and drifting warm (50 → 32) as it darkens, so shadows read
+     warm rather than grey. This replaces the old #f7e1d3 cream, which was a
+     tint of the retired coral and sat at hue 68 — visibly a different family
+     from the brand red at hue 29. The ramp splits the difference deliberately:
+     warm, but no longer orange against a true red. */
+  --color-paper-50:  oklch(0.978 0.008 50);   /* #FDF6F3  page ground          */
+  --color-paper-100: oklch(0.955 0.013 50);   /* #F8EEE9  subtle panel         */
+  --color-paper-200: oklch(0.928 0.018 50);   /* #F2E4DD  product tile, rules  */
+  --color-paper-300: oklch(0.890 0.022 50);   /* #E8D7CE  border               */
+  --color-paper-400: oklch(0.825 0.026 48);   /* #D5C1B7  strong border        */
+  --color-paper-500: oklch(0.722 0.026 45);   /* #B4A198  NON-TEXT only 2.3:1  */
+  --color-paper-600: oklch(0.598 0.026 42);   /* #8E7B74  NON-TEXT only 3.8:1  */
+  --color-paper-650: oklch(0.555 0.026 42);   /* #816E67  muted text  4.5:1 AA */
+  --color-paper-700: oklch(0.491 0.022 38);   /* #6C5D58  secondary   5.9:1 AA */
+  --color-paper-800: oklch(0.394 0.018 34);   /* #4F4340                       */
+  --color-paper-900: oklch(0.370 0.016 32);   /* #483D3A  body text   9.8:1 AA */
+  --color-paper-950: oklch(0.280 0.012 32);   /* #2F2725                       */
+  --color-paper-raised: oklch(0.9947 0.0045 78.30); /* #FFFDFA popover/raised  */
+
+  /* --- brand --------------------------------------------------------------
+     #CC0000 is the company logo's own red — the colour of record. The 2021
+     site's coral #e07d78 is RETIRED: it was a website invention and it fails
+     AA on this ground at 2.67:1. */
+  --color-brand-100: oklch(0.9305 0.0231 34.30); /* #F7E3DE tint               */
+  --color-brand-500: oklch(0.5308 0.2178 29.23); /* #CC0000 links   5.5:1 AA   */
+  --color-brand-600: oklch(0.4493 0.1844 29.23); /* #A30000 hover   7.7:1 AA   */
+
+  /* --- status -------------------------------------------------------------
+     Used by the open/closed indicator (issue 16). Never the only signal — the
+     text carries the state on its own. */
+  --color-open-600:   oklch(0.5289 0.1056 154.41); /* #2F7D4F  4.7:1 AA        */
+  --color-closed-600: var(--color-paper-650);
+
+  /* --- type ---------------------------------------------------------------
+     Newsreader carries display and product titles; Karla carries body and UI;
+     Noto Serif HK carries Chinese. PingFang HK is first in the CJK fallback —
+     it is the system face on every Mac and iPhone in Hong Kong. */
+  --font-sans:    "Karla", ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:   "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-hk:      "Noto Serif HK", "PingFang HK", "Hiragino Sans TC",
+                  "Microsoft JhengHei", "Newsreader", serif;
+  --font-heading: var(--font-serif);
+
+  --text-eyebrow: 0.625rem;   /* 10px, always with tracking-eyebrow + uppercase */
+  --text-xs:      0.75rem;    /* 12px */
+  --text-sm:      0.875rem;   /* 14px */
+  --text-base:    0.9375rem;  /* 15px */
+  --text-lg:      1.0625rem;  /* 17px */
+  --text-xl:      1.3125rem;  /* 21px */
+  --text-2xl:     1.6875rem;  /* 27px — the Chinese wordmark in the header */
+  --text-3xl:     2rem;       /* 32px */
+  --text-4xl:     2.5rem;     /* 40px — mobile hero */
+  --text-5xl:     3.875rem;   /* 62px — desktop hero */
+  --text-wordmark: 7.375rem;  /* 118px — the footer wordmark band */
+
+  --tracking-eyebrow: 0.2em;
+  --tracking-hk:      0.08em;  /* Chinese needs air that Latin does not */
+
+  /* --- shape --------------------------------------------------------------
+     2px, not shadcn's 10px. This single value is the main thing standing
+     between this site and looking like a SaaS dashboard — shadcn's uniform
+     soft radii are most of its default character. Everything else in the
+     radius scale derives from it. */
+  --radius: 0.125rem;
+}
+
+/* --- shadcn's semantic names, exposed as Tailwind utilities ----------------
+   REQUIRED. Without this block `border-border`, `bg-background` and
+   `text-muted-foreground` are unknown utilities and the build fails outright —
+   verified, not assumed. shadcn's own init writes this; keep it. */
+@theme inline {
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-popover:              var(--popover);
+  --color-popover-foreground:   var(--popover-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+/* --- shadcn's semantic contract, mapped onto the palette above -------------
+   Component code keeps using bg-background / text-muted-foreground / etc, so
+   anything added with `shadcn add` inherits this design rather than the
+   stock neutral-grey theme. */
+:root {
+  --background:            var(--color-paper-50);
+  --foreground:            var(--color-paper-900);
+  --card:                  var(--color-paper-50);
+  --card-foreground:       var(--color-paper-900);
+  --popover:               var(--color-paper-raised);
+  --popover-foreground:    var(--color-paper-900);
+
+  --primary:               var(--color-paper-900);   /* solid buttons are ink, */
+  --primary-foreground:    var(--color-paper-50);    /* not red — red is for   */
+                                                     /* links and one CTA      */
+  --secondary:             var(--color-paper-100);
+  --secondary-foreground:  var(--color-paper-900);
+  --muted:                 var(--color-paper-100);
+  --muted-foreground:      var(--color-paper-650);   /* 650, not 600 — see below */
+  --accent:                var(--color-brand-500);
+  --accent-foreground:     var(--color-paper-raised);
+
+  /* No destructive action exists on this site — nothing can be deleted or
+     ordered. Aliased to the brand red so a stray component still looks native
+     rather than introducing a second, unrelated red. */
+  --destructive:           var(--color-brand-600);
+  --destructive-foreground: var(--color-paper-raised);
+
+  --border:                var(--color-paper-300);
+  --input:                 var(--color-paper-300);
+  --ring:                  var(--color-brand-500);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-size: var(--text-base);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Chinese is set in its own face wherever it appears, including inside an
+     otherwise-Latin line. Applied via :lang so it follows the locale rather
+     than needing a class on every element. */
+  :lang(zh-hk), :lang(zh-Hant), .font-hk {
+    font-family: var(--font-hk);
+    letter-spacing: var(--tracking-hk);
+  }
+
+  h1, h2, h3 { @apply font-serif font-normal; line-height: 1.12; }
+
+  a { @apply text-brand-500; text-decoration: none; }
+  a:hover { @apply text-brand-600; }
+
+  /* Long product titles wrap badly at grid widths without this. */
+  h1, h2, h3, p { text-wrap: pretty; }
+}
+
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-paper-650);
+}
+
+/* ---------------------------------------------------------------------------
+   CONTRAST — measured against --paper-50 (#FDF6F3), WCAG AA needs 4.5:1 for
+   text below 18px. The mockups shipped three values that FAIL and must not be
+   used for text:
+
+     #9A8B85  3.07:1   was used for 10px eyebrow labels   -> use paper-650
+     #8E7B74  3.75:1   was used for muted body text       -> use paper-650
+     #A2938D  2.9:1    was used for de-emphasised lines   -> use paper-650
+     #E07D78  2.67:1   the retired coral                  -> use brand-500
+
+   paper-500 and paper-600 are kept in the ramp for BORDERS, RULES AND ICONS
+   only. The lightest legal text colour on this site is --color-paper-650.
+--------------------------------------------------------------------------- */
