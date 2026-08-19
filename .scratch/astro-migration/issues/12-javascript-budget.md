@@ -76,3 +76,17 @@ stated drivers, and this serves it directly.
 So: **home, about and 404 have no interactive element and should ship zero JS.** Shop and detail
 carry the nav island. There is no per-page budget to enforce beyond that — the rule is simply that a
 page with no interaction gets no `client:*` directive.
+
+
+## Measured after implementation (ticket 19)
+
+**118.6 KB gzip on every page** — React 55.1 + Nav island 55.6 + react-dom 4.0 + Paraglide 1.3 +
+status script 2.3.
+
+**This contradicts the answer above**, which said home, about and 404 would ship zero JS. That is
+impossible with the nav as a React island, since the header is on every page. The error was in this
+ticket, written before the nav existed.
+
+Option (b) is still available and now has a real price attached: making the nav two `<details>`
+disclosures would confine React to the shop page and drop the other four page types to **2.3 KB** —
+a 116 KB saving. **Dan chose (a), with the measured number in hand: the nav stays a React island and every page ships 118.6 KB gzip.** Recorded as a deliberate trade — one mental model and the full shadcn vocabulary, bought for 116 KB on four page types. Option (b) remains a one-component change if it is ever revisited.

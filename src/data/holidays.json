@@ -1,0 +1,262 @@
+{
+  "source": "https://www.1823.gov.hk/common/ical/en.json",
+  "fetchedAt": "2026-08-19",
+  "lastDate": "2027-12-27",
+  "holidays": [
+    {
+      "date": "2025-01-01",
+      "en": "The first day of January",
+      "zh": "一月一日"
+    },
+    {
+      "date": "2025-01-29",
+      "en": "Lunar New Year’s Day",
+      "zh": "農曆年初一"
+    },
+    {
+      "date": "2025-01-30",
+      "en": "The second day of Lunar New Year",
+      "zh": "農曆年初二"
+    },
+    {
+      "date": "2025-01-31",
+      "en": "The third day of Lunar New Year",
+      "zh": "農曆年初三"
+    },
+    {
+      "date": "2025-04-04",
+      "en": "Ching Ming Festival",
+      "zh": "清明節"
+    },
+    {
+      "date": "2025-04-18",
+      "en": "Good Friday",
+      "zh": "耶穌受難節"
+    },
+    {
+      "date": "2025-04-19",
+      "en": "The day following Good Friday",
+      "zh": "耶穌受難節翌日"
+    },
+    {
+      "date": "2025-04-21",
+      "en": "Easter Monday",
+      "zh": "復活節星期一"
+    },
+    {
+      "date": "2025-05-01",
+      "en": "Labour Day",
+      "zh": "勞動節"
+    },
+    {
+      "date": "2025-05-05",
+      "en": "The Birthday of the Buddha",
+      "zh": "佛誕"
+    },
+    {
+      "date": "2025-05-31",
+      "en": "Tuen Ng Festival",
+      "zh": "端午節"
+    },
+    {
+      "date": "2025-07-01",
+      "en": "Hong Kong Special Administrative Region Establishment Day",
+      "zh": "香港特別行政區成立紀念日"
+    },
+    {
+      "date": "2025-10-01",
+      "en": "National Day",
+      "zh": "國慶日"
+    },
+    {
+      "date": "2025-10-07",
+      "en": "The day following the Chinese Mid-Autumn Festival",
+      "zh": "中秋節翌日"
+    },
+    {
+      "date": "2025-10-29",
+      "en": "Chung Yeung Festival",
+      "zh": "重陽節"
+    },
+    {
+      "date": "2025-12-25",
+      "en": "Christmas Day",
+      "zh": "聖誕節"
+    },
+    {
+      "date": "2025-12-26",
+      "en": "The first weekday after Christmas Day",
+      "zh": "聖誕節後第一個周日"
+    },
+    {
+      "date": "2026-01-01",
+      "en": "The first day of January",
+      "zh": "一月一日"
+    },
+    {
+      "date": "2026-02-17",
+      "en": "Lunar New Year’s Day",
+      "zh": "農曆年初一"
+    },
+    {
+      "date": "2026-02-18",
+      "en": "The second day of Lunar New Year",
+      "zh": "農曆年初二"
+    },
+    {
+      "date": "2026-02-19",
+      "en": "The third day of Lunar New Year",
+      "zh": "農曆年初三"
+    },
+    {
+      "date": "2026-04-03",
+      "en": "Good Friday",
+      "zh": "耶穌受難節"
+    },
+    {
+      "date": "2026-04-04",
+      "en": "The day following Good Friday",
+      "zh": "耶穌受難節翌日"
+    },
+    {
+      "date": "2026-04-06",
+      "en": "The day following Ching Ming Festival",
+      "zh": "清明節翌日"
+    },
+    {
+      "date": "2026-04-07",
+      "en": "The day following Easter Monday",
+      "zh": "復活節星期一翌日"
+    },
+    {
+      "date": "2026-05-01",
+      "en": "Labour Day",
+      "zh": "勞動節"
+    },
+    {
+      "date": "2026-05-25",
+      "en": "The day following the Birthday of the Buddha",
+      "zh": "佛誕翌日"
+    },
+    {
+      "date": "2026-06-19",
+      "en": "Tuen Ng Festival",
+      "zh": "端午節"
+    },
+    {
+      "date": "2026-07-01",
+      "en": "Hong Kong Special Administrative Region Establishment Day",
+      "zh": "香港特別行政區成立紀念日"
+    },
+    {
+      "date": "2026-09-26",
+      "en": "The day following the Chinese Mid-Autumn Festival",
+      "zh": "中秋節翌日"
+    },
+    {
+      "date": "2026-10-01",
+      "en": "National Day",
+      "zh": "國慶日"
+    },
+    {
+      "date": "2026-10-19",
+      "en": "The day following Chung Yeung Festival",
+      "zh": "重陽節翌日"
+    },
+    {
+      "date": "2026-12-25",
+      "en": "Christmas Day",
+      "zh": "聖誕節"
+    },
+    {
+      "date": "2026-12-26",
+      "en": "The first weekday after Christmas Day",
+      "zh": "聖誕節後第一個周日"
+    },
+    {
+      "date": "2027-01-01",
+      "en": "The first day of January",
+      "zh": "一月一日"
+    },
+    {
+      "date": "2027-02-06",
+      "en": "Lunar New Year's Day",
+      "zh": "農曆年初一"
+    },
+    {
+      "date": "2027-02-08",
+      "en": "The third day of Lunar New Year",
+      "zh": "農曆年初三"
+    },
+    {
+      "date": "2027-02-09",
+      "en": "The fourth day of Lunar New Year",
+      "zh": "農曆年初四"
+    },
+    {
+      "date": "2027-03-26",
+      "en": "Good Friday",
+      "zh": "耶穌受難節"
+    },
+    {
+      "date": "2027-03-27",
+      "en": "The day following Good Friday",
+      "zh": "耶穌受難節翌日"
+    },
+    {
+      "date": "2027-03-29",
+      "en": "Easter Monday",
+      "zh": "復活節星期一"
+    },
+    {
+      "date": "2027-04-05",
+      "en": "Ching Ming Festival",
+      "zh": "清明節"
+    },
+    {
+      "date": "2027-05-01",
+      "en": "Labour Day",
+      "zh": "勞動節"
+    },
+    {
+      "date": "2027-05-13",
+      "en": "The Birthday of the Buddha",
+      "zh": "佛誕"
+    },
+    {
+      "date": "2027-06-09",
+      "en": "Tuen Ng Festival",
+      "zh": "端午節"
+    },
+    {
+      "date": "2027-07-01",
+      "en": "Hong Kong Special Administrative Region Establishment Day",
+      "zh": "香港特別行政區成立紀念日"
+    },
+    {
+      "date": "2027-09-16",
+      "en": "The day following the Chinese Mid-Autumn Festival",
+      "zh": "中秋節翌日"
+    },
+    {
+      "date": "2027-10-01",
+      "en": "National Day",
+      "zh": "國慶日"
+    },
+    {
+      "date": "2027-10-08",
+      "en": "Chung Yeung Festival",
+      "zh": "重陽節"
+    },
+    {
+      "date": "2027-12-25",
+      "en": "Christmas Day",
+      "zh": "聖誕節"
+    },
+    {
+      "date": "2027-12-27",
+      "en": "The first weekday after Christmas Day",
+      "zh": "聖誕節後第一個周日"
+    }
+  ]
+}

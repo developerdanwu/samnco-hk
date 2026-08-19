@@ -1,15 +1,4 @@
 ---
-import Base from "../layouts/Base.astro";
-import LocaleProbe from "../components/LocaleProbe.tsx";
-import { m } from "../paraglide/messages.js";
-import { getLocale, localizeHref } from "../paraglide/runtime.js";
+import HomePage from "../components/HomePage.astro";
 ---
-<Base>
-  <main class="p-10">
-    <h1 id="hero" class="font-serif text-5xl">{m.home_hero()}</h1>
-    <p id="intro" class="text-paper-700 mt-4 max-w-prose">{m.home_intro()}</p>
-    <p id="locale" class="eyebrow mt-6">{getLocale()}</p>
-    <a id="switch" class="mt-4 inline-block" href={localizeHref("/", { locale: "zh-hk" })}>{m.lang_zh()}</a>
-    <div class="mt-8"><LocaleProbe client:load /></div>
-  </main>
-</Base>
+<HomePage />

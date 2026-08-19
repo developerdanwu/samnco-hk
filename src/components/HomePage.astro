@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import OpenStatus from "./OpenStatus.astro";
+import banner from "../assets/banner-2500.jpg";
+import { m } from "../paraglide/messages.js";
+import { localizeHref } from "../paraglide/runtime.js";
+
+// One shared component; the en and zh-hk routes are three-line shells around it, so the
+// duplication is routing-only and never content (issue 03).
+const notes = [
+  [m.home_note_1_title(), m.home_note_1_body()],
+  [m.home_note_2_title(), m.home_note_2_body()],
+  [m.home_note_3_title(), m.home_note_3_body()],
+];
+---
+<Base>
+  <main>
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 pt-8 pb-6 md:grid-cols-[1.15fr_1fr] md:items-start md:gap-16 md:px-14 md:pt-16">
+      <div class="flex flex-col items-start gap-5 md:gap-6">
+        <OpenStatus />
+        <h1 class="font-serif text-[40px] leading-[1.06] font-light md:text-[62px]">{m.home_hero()}</h1>
+        <p class="text-paper-700 max-w-prose text-base leading-[1.72] md:text-[17px]">{m.home_intro()}</p>
+        <div class="flex w-full flex-col gap-2.5 pt-1 md:w-auto md:flex-row md:gap-3.5">
+          <a href={localizeHref("/shop")}
+             class="bg-paper-900 text-paper-50 flex h-13 items-center justify-center px-6 text-xs tracking-[0.14em] uppercase">
+            {m.home_cta_shop()}
+          </a>
+          <a href="https://wa.me/85297219032"
+             class="border-paper-400 flex h-13 items-center justify-center border px-6 text-xs tracking-[0.14em] uppercase">
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <figure class="flex flex-col gap-3.5">
+        <!-- LCP element: eager, high priority, explicit dimensions to avoid layout shift. -->
+        <Image
+          src={banner}
+          alt=""
+          widths={[500, 800, 1200, 1600]}
+          sizes="(min-width: 768px) 42vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-[4/5] w-full object-cover"
+        />
+        <figcaption class="eyebrow">{m.home_photo_caption()}</figcaption>
+      </figure>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-5 md:px-14">
+      <div class="border-paper-300 grid gap-7 border-t py-10 md:grid-cols-3 md:gap-9 md:py-11">
+        {notes.map(([title, body]) => (
+          <section class="flex flex-col gap-2">
+            <h2 class="font-serif text-xl md:text-[21px]">{title}</h2>
+            <p class="text-paper-700 text-sm leading-[1.7]">{body}</p>
+          </section>
+        ))}
+      </div>
+
+      <div class="border-paper-300 grid gap-8 border-t py-10 md:grid-cols-2 md:gap-12 md:py-11">
+        <div class="flex flex-col justify-center gap-4">
+          <p class="eyebrow">{m.home_find_us()}</p>
+          <h2 class="font-serif text-[27px] leading-[1.2] font-light md:text-[34px]">
+            {m.address_line1()}<br />{m.address_line2()}
+          </h2>
+          <p class="text-paper-700 text-sm leading-[1.75]">
+            {m.footer_directions()}<br />{m.status_hours_summary()}
+          </p>
+        </div>
+        <!-- Ported from the Flask site, but lazy: the embed only loads when scrolled to. -->
+        <iframe
+          title={m.map_title()}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="border-paper-300 min-h-60 w-full border md:min-h-72"
+          src="https://www.google.com/maps?q=G%2FF%2C+38+Stanley+Street%2C+Central%2C+Hong+Kong&output=embed"
+        ></iframe>
+      </div>
+    </div>
+  </main>
+</Base>

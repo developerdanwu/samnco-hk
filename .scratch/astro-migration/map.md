@@ -169,7 +169,8 @@ In scope, but not yet sharp enough to ticket. Graduates as the frontier advances
   locales, the search contract is measured, the image transforms are sized, the URL scheme is fixed
   and the status indicator is specified. What remains is execution: scaffold, wire the Contentful
   content layer, port the four page types plus 404, build the search route, and the status script.
-  **Charted — tickets 17–25**; 17 is done.
+  **Charted — tickets 17–25**; 17, 18 and 19 are done. Dan confirmed the nav stays a
+  React island at **118.6 KB gzip on every page**, chosen with the measured number in hand.
 - **The long tail of pages.** 404, `sitemap.xml`, `robots.txt` (old versions sit in `old files/`),
   and the Open Graph / Twitter meta currently hardcoded in `base.html`.
 - **Whether the i18n fallback is needed.** If the Paraglide SSG spike fails, Astro's own built-in

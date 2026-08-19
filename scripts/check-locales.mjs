@@ -19,6 +19,11 @@ import { join, relative, sep } from "node:path";
 const ROOT = ".vercel/output/static";
 const LOCALE_DIR = "zh-hk";
 
+// 404 is exempt from parity: static hosts serve ONE 404.html for every unmatched route, so
+// Astro emits it as /404.html rather than /404/index.html and there is no meaningful
+// counterpart. The page self-localises at runtime instead — see src/components/NotFoundPage.astro.
+const EXEMPT = /(^|\/)404(\.html|\/index\.html)$/;
+
 function* htmlFiles(dir) {
   for (const e of readdirSync(dir)) {
     const p = join(dir, e);
@@ -32,6 +37,7 @@ const routes = { en: new Set(), [LOCALE_DIR]: new Set() };
 
 for (const file of htmlFiles(ROOT)) {
   const rel = relative(ROOT, file);
+  if (EXEMPT.test(rel)) continue;
   const parts = rel.split(sep);
   const isLocalised = parts[0] === LOCALE_DIR;
   const expected = isLocalised ? LOCALE_DIR : "en";

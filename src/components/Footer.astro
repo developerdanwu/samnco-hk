@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.png";
+import OpenStatus from "./OpenStatus.astro";
+import { m } from "../paraglide/messages.js";
+import { localizeHref } from "../paraglide/runtime.js";
+import { CATEGORIES } from "../lib/contentful.ts";
+
+interface Props { counts: Record<string, number>; total: number }
+const { counts, total } = Astro.props;
+
+const CATEGORY_LABEL: Record<string, () => string> = {
+  "office-stationery": m.cat_office, "seasonal-products": m.cat_seasonal,
+  "art-supplies": m.cat_art, lifestyle: m.cat_lifestyle, children: m.cat_children,
+};
+const days = [
+  [m.day_mon(), "9 – 7"], [m.day_tue(), "9 – 7"], [m.day_wed(), "9 – 7"],
+  [m.day_thu(), "9 – 7"], [m.day_fri(), "9 – 7"], [m.day_sat(), "9 – 5:30"],
+] as const;
+---
+<footer id="visit" class="border-paper-300 mt-20 border-t scroll-mt-4">
+  <div class="mx-auto max-w-6xl px-5 md:px-14">
+    <!-- Navigation -->
+    <div class="grid gap-10 py-11 md:grid-cols-[1.2fr_1fr_1fr_1.15fr] md:gap-12">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <Image src={logo} alt="" width={34} height={34} class="size-8.5" />
+          <span class="flex flex-col gap-0.5">
+            <span class="font-hk text-xl leading-none font-semibold">三和文藝公司</span>
+            <span class="text-paper-650 text-[9.5px] tracking-[0.18em] uppercase">Sam &amp; Company</span>
+          </span>
+        </div>
+        <OpenStatus class="self-start" />
+        <p class="text-paper-700 text-sm leading-relaxed">
+          {m.address_line1()}<br />{m.address_line2()}<br />
+          <span class="text-paper-650">{m.footer_directions()}</span>
+        </p>
+      </div>
+
+      <nav class="flex flex-col gap-1.5">
+        <p class="eyebrow mb-1">{m.footer_shop()}</p>
+        <a class="text-paper-700 flex justify-between text-sm leading-8" href={localizeHref("/shop")}>
+          {m.footer_all_products()}<span class="text-paper-500 text-xs">{total}</span>
+        </a>
+        {CATEGORIES.map((c) => (
+          <a class="text-paper-700 flex justify-between text-sm leading-8" href={localizeHref(`/shop/${c}`)}>
+            {CATEGORY_LABEL[c]()}<span class="text-paper-500 text-xs">{counts[c]}</span>
+          </a>
+        ))}
+      </nav>
+
+      <nav class="flex flex-col gap-1.5">
+        <p class="eyebrow mb-1">{m.footer_pages()}</p>
+        <a class="text-paper-700 text-sm leading-8" href={localizeHref("/")}>{m.nav_home()}</a>
+        <a class="text-paper-700 text-sm leading-8" href={localizeHref("/about")}>{m.footer_about()}</a>
+        <a class="text-paper-700 text-sm leading-8" href="#visit">{m.footer_visit()}</a>
+        <a class="text-paper-700 text-sm leading-8" href={localizeHref("/shop")}>{m.footer_search()}</a>
+      </nav>
+
+      <div class="flex flex-col gap-1.5">
+        <p class="eyebrow mb-1">{m.footer_ask()}</p>
+        <a class="text-brand-500 text-sm leading-8" href="https://wa.me/85297219032">WhatsApp +852 9721 9032</a>
+        <a class="text-paper-700 text-sm leading-8" href="tel:+85225230338">{m.label_phone()} +852 2523 0338</a>
+        <p class="text-paper-700 text-sm leading-8">{m.label_fax()} +852 2526 2797</p>
+        <a class="text-paper-700 text-sm leading-8" href="mailto:scsales@netvigator.com">scsales@netvigator.com</a>
+      </div>
+    </div>
+
+    <!-- Information: the seven-day strip -->
+    <div class="border-paper-300 grid gap-11 border-t py-7 md:grid-cols-[1.75fr_1fr]">
+      <div class="flex flex-col gap-3">
+        <p class="eyebrow">{m.footer_hours()}</p>
+        <div class="bg-paper-300 border-paper-300 hidden grid-cols-7 gap-px border md:grid">
+          {days.map(([d, t]) => (
+            <div class="bg-paper-50 flex flex-col items-center gap-1.5 px-2 py-3">
+              <span class="text-paper-650 text-[10px] tracking-[0.14em] uppercase">{d}</span>
+              <span class="text-xs">{t}</span>
+            </div>
+          ))}
+          <div class="bg-paper-50 flex flex-col items-center gap-1.5 px-2 py-3">
+            <span class="text-paper-500 text-[10px] tracking-[0.14em] uppercase">{m.day_sun()}</span>
+            <span class="text-paper-500 text-xs">{m.hours_closed()}</span>
+          </div>
+        </div>
+        <div class="border-paper-300 flex flex-col border md:hidden">
+          <div class="bg-paper-100 flex justify-between px-3.5 py-2.5 text-sm">{m.hours_weekday()}</div>
+          <div class="border-paper-200 flex justify-between border-t px-3.5 py-2.5 text-sm">{m.hours_saturday()}</div>
+          <div class="border-paper-200 text-paper-650 flex justify-between border-t px-3.5 py-2.5 text-sm">
+            <span>{m.hours_sunday()}</span><span>{m.hours_closed()}</span>
+          </div>
+        </div>
+        <p class="text-paper-650 text-xs">{m.hours_ph()}</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <p class="eyebrow">{m.footer_getting_here()}</p>
+        <p class="text-paper-700 text-sm leading-relaxed">{m.footer_directions()}</p>
+        <a
+          href="https://maps.google.com/?q=G/F,38+Stanley+Street,Central,Hong+Kong"
+          class="border-paper-400 flex h-13 items-center justify-center border text-[10.5px] tracking-[0.14em] uppercase md:w-fit md:px-5"
+        >{m.footer_maps()}</a>
+      </div>
+    </div>
+
+    <div class="border-paper-300 text-paper-650 flex flex-col gap-1 border-t py-4 text-xs md:flex-row md:justify-between">
+      <span>{m.footer_tagline()}</span>
+      <span>{m.footer_rights()}</span>
+    </div>
+  </div>
+
+  <!-- Wordmark band: at this size the letterforms actually read (issue 05). -->
+  <div class="flex justify-center overflow-hidden pt-2 select-none" aria-hidden="true">
+    <span class="font-hk text-[52px] leading-[0.9] font-semibold whitespace-nowrap text-[color:var(--color-paper-200)] md:text-[118px]">
+      三和文藝公司
+    </span>
+  </div>
+</footer>

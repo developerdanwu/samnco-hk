@@ -1,0 +1,112 @@
+---
+import { m } from "../paraglide/messages.js";
+
+interface Props { class?: string }
+const { class: klass = "" } = Astro.props;
+---
+<!--
+  Server-rendered content is the HOURS SUMMARY, never a computed state: a prerendered
+  "Open now" would be frozen at deploy and wrong within hours. The script below replaces it.
+  Honest before JavaScript runs, useful if it never does, never stale (issue 16).
+-->
+<p
+  class:list={["inline-flex items-center gap-2 bg-paper-100 px-3 py-2 text-xs", klass]}
+  data-open-status
+>
+  <span
+    class="block size-[7px] rounded-full bg-paper-500"
+    data-status-dot
+    aria-hidden="true"
+  ></span>
+  <span class="tracking-[0.1em] uppercase" data-status-text>{m.status_hours_summary()}</span>
+</p>
+
+<script>
+  import { m } from "../paraglide/messages.js";
+  import data from "../data/holidays.json";
+
+  // Mon–Fri 09:00–19:00, Sat 09:00–17:30, Sun closed. Minutes since midnight.
+  const HOURS: Record<string, [number, number] | null> = {
+    Mon: [540, 1140], Tue: [540, 1140], Wed: [540, 1140], Thu: [540, 1140],
+    Fri: [540, 1140], Sat: [540, 1050], Sun: null,
+  };
+  const ORDER = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const CLOSING_SOON_MINS = 60;
+
+  // Times and day names are MESSAGES, not formatted values — the two locales order them
+  // differently, so this can never be string concatenation (issue 07).
+  const timeMsg = (mins: number) =>
+    mins === 540 ? m.time_0900() : mins === 1050 ? m.time_1730() : m.time_1900();
+  const dayMsg = (short: string) =>
+    ({ Mon: m.dayfull_mon, Tue: m.dayfull_tue, Wed: m.dayfull_wed, Thu: m.dayfull_thu,
+       Fri: m.dayfull_fri, Sat: m.dayfull_sat, Sun: m.dayfull_sun })[short]!();
+
+  /** Hong Kong's wall clock, whatever the visitor's device says. */
+  function hkNow() {
+    const p = Object.fromEntries(
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Hong_Kong", weekday: "short", hour: "2-digit",
+        minute: "2-digit", hour12: false, year: "numeric", month: "2-digit", day: "2-digit",
+      }).formatToParts(new Date()).map((x) => [x.type, x.value]),
+    );
+    return {
+      weekday: p.weekday as string,
+      minutes: Number(p.hour) * 60 + Number(p.minute),
+      iso: `${p.year}-${p.month}-${p.day}`,
+    };
+  }
+
+  const holidays = new Map(data.holidays.map((h) => [h.date, h]));
+
+  function nextOpening(fromIso: string, fromWeekday: string, includeToday: boolean) {
+    let idx = ORDER.indexOf(fromWeekday);
+    const date = new Date(`${fromIso}T00:00:00Z`);
+    for (let step = includeToday ? 0 : 1; step <= 14; step++) {
+      const d = new Date(date.getTime() + step * 86_400_000);
+      const iso = d.toISOString().slice(0, 10);
+      const wd = ORDER[(idx + step) % 7];
+      if (!holidays.has(iso) && HOURS[wd]) {
+        return { time: timeMsg(HOURS[wd]![0]), day: step === 0 ? m.day_today() : step === 1 ? m.day_tomorrow() : dayMsg(wd) };
+      }
+    }
+    return null;
+  }
+
+  function render() {
+    const el = document.querySelector("[data-open-status]");
+    if (!el) return;
+    const text = el.querySelector("[data-status-text]")!;
+    const dot = el.querySelector("[data-status-dot]")!;
+    const { weekday, minutes, iso } = hkNow();
+
+    const setDot = (cls: string) => { dot.className = `block size-[7px] rounded-full ${cls}`; };
+
+    // Data exhausted — say so rather than guessing. Being unhelpful is recoverable;
+    // sending someone to a closed shop is not.
+    if (iso > data.lastDate) { text.textContent = m.status_unknown(); setDot("bg-paper-500"); return; }
+
+    const holiday = holidays.get(iso);
+    if (holiday) {
+      const name = document.documentElement.lang === "zh-hk" ? holiday.zh : holiday.en;
+      text.textContent = name ? m.status_closed_ph_named({ holiday: name }) : m.status_closed_ph();
+      setDot("bg-brand-500");
+      return;
+    }
+
+    const today = HOURS[weekday];
+    if (today && minutes >= today[0] && minutes < today[1]) {
+      const closes = timeMsg(today[1]);
+      const soon = minutes >= today[1] - CLOSING_SOON_MINS;
+      text.textContent = soon ? m.status_closing_soon({ time: closes }) : m.status_open_until({ time: closes });
+      setDot(soon ? "bg-brand-500" : "bg-open-600");
+      return;
+    }
+
+    // Closed. If today has hours still ahead, the next opening is today.
+    const next = nextOpening(iso, weekday, Boolean(today) && minutes < today![0]);
+    text.textContent = next ? m.status_closed_opens(next) : m.status_unknown();
+    setDot("bg-brand-500");
+  }
+
+  render();
+</script>

@@ -94,5 +94,16 @@
   "search_en_only": "Product names are in English — try an English word.",
   "search_category_hint": "Looking for {category}? See all {count}.",
   "status_closed_ph_named": "Closed today — {holiday}",
-  "status_hours_summary": "Mon–Fri 9am–7pm · Sat 9am–5:30pm"
+  "status_hours_summary": "Mon–Fri 9am–7pm · Sat 9am–5:30pm",
+  "day_today": "today",
+  "about_title": "About us",
+  "about_p1": "The unique story of Sam and Co. Hong Kong began in 1980, launched by husband and wife duo. We are a local independent business, connected to a diverse number of international partner suppliers where we ensure to sell at better prices and wider choices. For the past four decades, we have been proud to offer the broadest and latest range of office products, arts and craft supplies, school supplies, as well as other simple goods with fantastic service. Our long-standing store on Stanley Street has been a place of business, a meeting ground for many, and a second home to a family.",
+  "about_p2": "Sam & Co. is at the heart of your business and family, offering convenience, plus everything and anything from office to home supplies. We provide local delivery services throughout Hong Kong on over 10,000 products, and we welcome any returns from customers who are unsatisfied with our products.",
+  "about_p3": "Our goal here is not only to offer you promising supplies for both your office and home, but we also aim to offer you friendly and caring services that will put a smile on your face, making our humble business a success!",
+  "about_p4": "We were founded on the belief that when you're happy, we're happy. So if you bought it and you don't like it, please tell us and we do our best to fix it.",
+  "meta_title_about": "About — Sam and Company",
+  "meta_title_404": "Page not found — Sam and Company",
+  "home_find_us": "Find us",
+  "map_title": "Map showing Sam and Company on Stanley Street",
+  "e404_back": "Back to the shop"
 }
