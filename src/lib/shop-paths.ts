@@ -39,3 +39,19 @@ export async function shopPaths() {
   for (const c of CATEGORIES) add(all.filter((p) => p.category === c), c);
   return out;
 }
+
+/**
+ * One page per product per locale — 348 x 2 = 696. Routed by `sys.id`, unchanged from the
+ * Flask site, so every indexed detail URL survives byte-identical (issue 08). Slugs are
+ * impossible: 122 of 348 titles collide when slugified (issue 02).
+ */
+export async function detailPaths() {
+  const all = await getAllProducts();
+  return all.map((product) => ({
+    params: { id: product.id },
+    props: {
+      product,
+      related: all.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4),
+    },
+  }));
+}

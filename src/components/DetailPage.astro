@@ -1,0 +1,87 @@
+---
+import Base from "../layouts/Base.astro";
+import ProductCard from "./ProductCard.astro";
+import OpenStatus from "./OpenStatus.astro";
+import { m } from "../paraglide/messages.js";
+import { localizeHref } from "../paraglide/runtime.js";
+import { imageUrl, detailSrcSet, DETAIL_SIZES } from "../lib/images.ts";
+import type { Product } from "../lib/contentful.ts";
+
+interface Props { product: Product; related: Product[] }
+const { product, related } = Astro.props;
+
+const CATEGORY_LABEL: Record<string, () => string> = {
+  "office-stationery": m.cat_office, "seasonal-products": m.cat_seasonal,
+  "art-supplies": m.cat_art, lifestyle: m.cat_lifestyle, children: m.cat_children,
+};
+const category = CATEGORY_LABEL[product.category]?.() ?? product.category;
+---
+<Base title={`${product.title} — ${m.meta_title_home()}`} description={`${product.title} — ${category}. ${m.meta_desc()}`}>
+  <main class="mx-auto max-w-6xl px-5 pt-5 md:px-14 md:pt-7">
+    <nav class="text-paper-650 text-[11px] tracking-[0.06em]" aria-label="Breadcrumb">
+      <a href={localizeHref("/shop")}>{m.shop_title()}</a>
+      <span aria-hidden="true"> / </span>
+      <a href={localizeHref(`/shop/${product.category}`)}>{category}</a>
+    </nav>
+
+    <div class="grid gap-8 py-6 md:grid-cols-[1.05fr_1fr] md:gap-14 md:py-8">
+      <!--
+        ONE image. Not a gallery: 0 of 348 entries have a second image, so the Flask
+        carousel looped image[1:] over nothing on every product (issues 02, 15).
+      -->
+      <div class="bg-paper-200 flex aspect-square items-center justify-center overflow-hidden">
+        <img
+          src={imageUrl(product.image, 800)}
+          srcset={detailSrcSet(product.image)}
+          sizes={DETAIL_SIZES}
+          alt={product.title}
+          width="800"
+          height="800"
+          loading="eager"
+          fetchpriority="high"
+          class="size-[86%] object-contain mix-blend-multiply"
+        />
+      </div>
+
+      <div class="flex flex-col gap-5 md:pt-2">
+        <div class="flex flex-col gap-2.5">
+          <p class="eyebrow">{category}</p>
+          <h1 class="font-serif text-[32px] leading-[1.14] font-light md:text-[39px]">{product.title}</h1>
+          <p class="text-paper-700 text-base">
+            {product.price !== null ? `HK$${product.price}` : <span class="text-paper-650">{m.detail_no_price()}</span>}
+          </p>
+        </div>
+
+        <div class="bg-paper-300 h-px"></div>
+        <p class="text-paper-700 text-[15px] leading-[1.75]">{m.detail_availability()}</p>
+
+        <!-- Contact, not a cart: nothing on this site is purchasable. -->
+        <div class="flex flex-col gap-2.5">
+          <a href="https://wa.me/85297219032"
+             class="bg-brand-500 text-paper-50 flex h-13.5 items-center justify-center px-6 text-center text-[13px] tracking-[0.1em] uppercase">
+            WhatsApp +852 9721 9032
+          </a>
+          <a href="tel:+85225230338"
+             class="border-paper-400 flex h-13.5 items-center justify-center border px-6 text-[13px] tracking-[0.1em] uppercase">
+            {m.label_phone()} +852 2523 0338
+          </a>
+        </div>
+
+        <div class="bg-paper-100 flex flex-col gap-2 p-5">
+          <p class="eyebrow">{m.detail_or_visit()}</p>
+          <p class="text-[15px] leading-[1.65]">{m.address_full()}</p>
+          <OpenStatus class="mt-1 self-start bg-transparent px-0" />
+        </div>
+      </div>
+    </div>
+
+    {related.length > 0 && (
+      <div class="border-paper-300 border-t pt-7">
+        <p class="eyebrow mb-5">{m.detail_more()}</p>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-6.5 pb-4 md:grid-cols-4 md:gap-x-7">
+          {related.map((p) => <ProductCard product={p} />)}
+        </div>
+      </div>
+    )}
+  </main>
+</Base>

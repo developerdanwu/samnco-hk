@@ -1,0 +1,7 @@
+---
+import DetailPage from "../../../components/DetailPage.astro";
+import { detailPaths } from "../../../lib/shop-paths.ts";
+export async function getStaticPaths() { return await detailPaths(); }
+const { product, related } = Astro.props;
+---
+<DetailPage product={product} related={related} />
