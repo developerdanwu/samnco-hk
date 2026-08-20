@@ -1,17 +1,17 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import portrait from "../assets/about-img-800.jpg";
+import shopfront from "../assets/map-banner-2500.jpg";
 import { m } from "../paraglide/messages.js";
 ---
 <Base title={m.meta_title_about()}>
-  <main class="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-[1fr_1.15fr] md:gap-16 md:px-14 md:py-16">
+  <main class="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-[1fr_1.15fr] md:items-start md:gap-16 md:px-14 md:py-16">
     <Image
-      src={portrait}
+      src={shopfront}
       alt=""
-      widths={[400, 700, 1000]}
+      widths={[500, 800, 1200]}
       sizes="(min-width: 768px) 40vw, 100vw"
-      class="aspect-4/5 w-full object-cover"
+      class="aspect-3/2 w-full object-cover"
     />
     <div class="flex flex-col gap-5">
       <h1 class="font-serif text-[34px] leading-[1.1] font-light md:text-5xl">{m.about_title()}</h1>
