@@ -89,14 +89,17 @@ function toProduct(entry: any): Product | null {
 
 let cache: Product[] | null = null;
 
-/** Every published product. Cached per process, so ~700 prerendered pages fetch once. */
+/**
+ * Every published product, newest first — `-sys.createdAt` so the most recently added stock
+ * leads page 1 of /shop and each category. Cached per process, so ~700 prerendered pages fetch once.
+ */
 export async function getAllProducts(): Promise<Product[]> {
   if (cache) return cache;
   const out: Product[] = [];
   let skip = 0;
   let total = Infinity;
   while (skip < total) {
-    const data = await request({ limit: PAGE_SIZE, skip, order: "sys.createdAt" });
+    const data = await request({ limit: PAGE_SIZE, skip, order: "-sys.createdAt" });
     total = data.total;
     for (const entry of data.items) {
       const p = toProduct(entry);
