@@ -185,11 +185,22 @@
 
   h1, h2, h3 { @apply font-serif font-normal; line-height: 1.12; }
 
-  a { @apply text-brand-500; text-decoration: none; }
-  a:hover { @apply text-brand-600; }
+  /* Links INHERIT by default. A blanket brand colour here bled into every element wrapped
+     in a link — product titles, breadcrumbs — since those set no colour of their own. Red is
+     an accent, not the colour of anything clickable. Use `.link` for prose links. */
+  a { color: inherit; text-decoration: none; }
 
   /* Long product titles wrap badly at grid widths without this. */
   h1, h2, h3, p { text-wrap: pretty; }
+}
+
+/* An inline prose link: the one place the brand red belongs on text. */
+@utility link {
+  color: var(--color-brand-500);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklch, var(--color-brand-500) 35%, transparent);
 }
 
 @utility eyebrow {
