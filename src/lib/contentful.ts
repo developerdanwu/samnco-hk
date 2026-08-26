@@ -87,14 +87,29 @@ function toProduct(entry: any): Product | null {
   };
 }
 
-let cache: Product[] | null = null;
+/**
+ * Per-instance catalogue cache.
+ *
+ * Under ISR a warm serverless instance can outlive many re-renders, so an unbounded cache would
+ * pin the catalogue to whatever it was when the instance booted — a purge would faithfully
+ * re-render stale data. Two things bound it: this TTL, and `invalidateProducts()`, which the
+ * middleware calls when a request carries the revalidate header sent by the purge fan-out.
+ */
+const CACHE_TTL_MS = 60_000;
+let cache: { products: Product[]; at: number } | null = null;
+
+/** Drop the cached catalogue. Called from middleware on an authenticated revalidate request. */
+export function invalidateProducts(): void {
+  cache = null;
+}
 
 /**
  * Every published product, newest first — `-sys.createdAt` so the most recently added stock
- * leads page 1 of /shop and each category. Cached per process, so ~700 prerendered pages fetch once.
+ * leads page 1 of /shop and each category. Cached per instance, so one render of /shop plus its
+ * layout hits Contentful once, not twice.
  */
 export async function getAllProducts(): Promise<Product[]> {
-  if (cache) return cache;
+  if (cache && Date.now() - cache.at < CACHE_TTL_MS) return cache.products;
   const out: Product[] = [];
   let skip = 0;
   let total = Infinity;
@@ -107,7 +122,7 @@ export async function getAllProducts(): Promise<Product[]> {
     }
     skip += PAGE_SIZE;
   }
-  cache = out;
+  cache = { products: out, at: Date.now() };
   return out;
 }
 

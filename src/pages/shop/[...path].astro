@@ -1,7 +1,16 @@
 ---
 import ShopPage from "../../components/ShopPage.astro";
-import { shopPaths } from "../../lib/shop-paths.ts";
-export async function getStaticPaths() { return await shopPaths(); }
-const props = Astro.props;
+import NotFoundPage from "../../components/NotFoundPage.astro";
+import { resolveShopPath } from "../../lib/shop-paths.ts";
+
+// On-demand + Vercel ISR: rendered once per path, then served from the edge cache until a
+// Contentful publish purges it (see src/lib/isr.ts). Prerendering instead would freeze the
+// catalogue at deploy time, which is exactly what this change removes.
+export const prerender = false;
+
+// Unknown category or out-of-range page: render the 404 body with a real 404 status, rather
+// than an empty product grid that reads as a valid page to a crawler.
+const props = await resolveShopPath(Astro.params.path);
+if (!props) Astro.response.status = 404;
 ---
-<ShopPage {...props} />
+{props ? <ShopPage {...props} /> : <NotFoundPage />}

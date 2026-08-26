@@ -1,4 +1,8 @@
 ---
 import HomePage from "../../components/HomePage.astro";
+
+// Rendered on demand and cached by Vercel ISR: Base.astro reads the Contentful catalogue for
+// the footer counts, so even this page is only as fresh as the last publish purge.
+export const prerender = false;
 ---
 <HomePage />
