@@ -1,7 +1,11 @@
 ---
 import DetailPage from "../../../components/DetailPage.astro";
-import { detailPaths } from "../../../lib/shop-paths.ts";
-export async function getStaticPaths() { return await detailPaths(); }
-const { product, related } = Astro.props;
+import NotFoundPage from "../../../components/NotFoundPage.astro";
+import { getDetailProps } from "../../../lib/shop-paths.ts";
+
+export const prerender = false;
+
+const props = await getDetailProps(Astro.params.id!);
+if (!props) Astro.response.status = 404;
 ---
-<DetailPage product={product} related={related} />
+{props ? <DetailPage product={props.product} related={props.related} /> : <NotFoundPage />}

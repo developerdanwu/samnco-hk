@@ -1,7 +1,11 @@
 ---
 import ShopPage from "../../../components/ShopPage.astro";
-import { shopPaths } from "../../../lib/shop-paths.ts";
-export async function getStaticPaths() { return await shopPaths(); }
-const props = Astro.props;
+import NotFoundPage from "../../../components/NotFoundPage.astro";
+import { resolveShopPath } from "../../../lib/shop-paths.ts";
+
+export const prerender = false;
+
+const props = await resolveShopPath(Astro.params.path);
+if (!props) Astro.response.status = 404;
 ---
-<ShopPage {...props} />
+{props ? <ShopPage {...props} /> : <NotFoundPage />}
